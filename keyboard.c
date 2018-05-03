@@ -39,7 +39,12 @@ int main(void) {
 
   bool keyWasPressed = false;
   while (true) {
+    // Read the keyboard matrix to figure out what, if any, keys were pressed
     keyWasPressed = matrix_scan();
+
+    // Consume the 'keys pressed' buffer and send it to the computer
+    // ...eventually fill_keyboard_report is called to actually generate
+    // the HID update packet
     HID_Device_USBTask(&Keyboard_HID_Interface);
     USB_USBTask();
 
@@ -180,4 +185,3 @@ void CALLBACK_HID_Device_ProcessHIDReport(USB_ClassInfo_HID_Device_t* const HIDI
     led_caps_lock_off();
   }
 }
-
